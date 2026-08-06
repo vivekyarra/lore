@@ -1,0 +1,3 @@
+import { fail, ok } from "@/lib/http";
+import { publicState, updateState } from "@/lib/store";
+export async function POST() { try { const state = await updateState((draft) => { if (!draft.story || draft.story.status !== "PUBLISHED") throw new Error("Only a published story can be closed."); if (!draft.story.followUpVideoId) throw new Error("A follow-up video is required."); draft.story.status = "CLOSED"; draft.story.closedAt = new Date().toISOString(); draft.audit.push({ at: new Date().toISOString(), event: "STORY_CLOSED", entityId: draft.story.id }); }); return ok(publicState(state)); } catch (error) { return fail(error); } }

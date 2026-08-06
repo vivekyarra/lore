@@ -1,0 +1,4 @@
+import { fail, ok } from "@/lib/http";
+import { publicState, readState, updateState } from "@/lib/store";
+import { downloadCaption } from "@/lib/youtube";
+export async function POST() { try { const current = await readState(); if (!current.encryptedRefreshToken || !current.video) throw new Error("Import an owned YouTube video first."); const transcript = await downloadCaption(current.encryptedRefreshToken, current.video.youtubeVideoId); const state = await updateState((draft) => { if (!draft.video) throw new Error("Video not found."); draft.video.transcript = transcript; draft.video.transcriptSource = "youtube_caption"; draft.audit.push({ at: new Date().toISOString(), event: "CAPTIONS_IMPORTED", entityId: draft.video.youtubeVideoId, metadata: { cueCount: transcript.length } }); }); return ok(publicState(state)); } catch (error) { return fail(error); } }

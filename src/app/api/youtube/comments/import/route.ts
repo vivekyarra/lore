@@ -1,0 +1,4 @@
+import { fail, ok } from "@/lib/http";
+import { publicState, readState, updateState } from "@/lib/store";
+import { importComments } from "@/lib/youtube";
+export async function POST() { try { const current = await readState(); if (!current.encryptedRefreshToken || !current.video?.candidate) throw new Error("Analyze a creator-owned video before importing comments."); const comments = await importComments(current.encryptedRefreshToken, current.video.youtubeVideoId, current.video.candidate); const state = await updateState((draft) => { if (!draft.video) throw new Error("Video not found."); draft.video.comments = comments; draft.audit.push({ at: new Date().toISOString(), event: "COMMENTS_IMPORTED", entityId: draft.video.youtubeVideoId, metadata: { count: comments.length } }); }); return ok(publicState(state)); } catch (error) { return fail(error); } }

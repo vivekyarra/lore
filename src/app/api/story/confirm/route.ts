@@ -1,0 +1,3 @@
+import { fail, ok } from "@/lib/http";
+import { publicState, updateState } from "@/lib/store";
+export async function POST() { try { const state = await updateState((draft) => { if (!draft.story || !draft.video?.candidate?.evidenceValidated) throw new Error("A source-validated candidate is required."); if (!draft.video.comments.some((comment) => comment.selected && comment.matchDecision === "follow_up_request")) throw new Error("Select at least one verified follow-up request."); draft.story.status = "CONFIRMED"; draft.story.confirmedAt = new Date().toISOString(); draft.audit.push({ at: new Date().toISOString(), event: "STORY_CONFIRMED", entityId: draft.story.id }); }); return ok(publicState(state)); } catch (error) { return fail(error); } }

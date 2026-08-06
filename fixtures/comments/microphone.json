@@ -1,0 +1,6 @@
+[
+  { "id": "DEMO_COMMENT_1", "text": "How did the microphone perform after seven days?", "expected": "follow_up_request" },
+  { "id": "DEMO_COMMENT_2", "text": "Are you still making the microphone update?", "expected": "follow_up_request" },
+  { "id": "DEMO_COMMENT_3", "text": "Please make part two. Did the microphone survive?", "expected": "follow_up_request" },
+  { "id": "DEMO_COMMENT_4", "text": "Nice lighting setup.", "expected": "unrelated" }
+]

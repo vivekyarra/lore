@@ -1,0 +1,143 @@
+/* Motion is functional: it explains hierarchy and state changes. */
+.workspace-body > * {
+  animation: workspace-in 420ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.source-player,
+.video-canvas {
+  transition: transform 260ms cubic-bezier(.22, 1, .36, 1), box-shadow 260ms ease;
+}
+
+.source-player:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(22, 22, 20, .14);
+}
+
+.comment-card,
+.reply-editor,
+.asset-row,
+.mini-video-card,
+.owned-video-grid button {
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.comment-card:hover,
+.reply-editor:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(25, 25, 23, .06);
+}
+
+.comment-card:nth-child(1), .reply-editor:nth-child(1) { animation: card-in 360ms 70ms both; }
+.comment-card:nth-child(2), .reply-editor:nth-child(2) { animation: card-in 360ms 120ms both; }
+.comment-card:nth-child(3), .reply-editor:nth-child(3) { animation: card-in 360ms 170ms both; }
+.comment-card:nth-child(4), .reply-editor:nth-child(4) { animation: card-in 360ms 220ms both; }
+
+.floating-comment.one { animation: comment-float-one 7s ease-in-out infinite; }
+.floating-comment.two { animation: comment-float-two 8s 900ms ease-in-out infinite; }
+.promise-frame { animation: promise-focus 7s ease-in-out infinite; }
+.playhead { animation: playhead-preview 6s cubic-bezier(.4, 0, .2, 1) infinite; }
+.pulse { animation: pulse-ring 2s ease-out infinite; }
+.success-ring { animation: success-in 500ms cubic-bezier(.2, 1.4, .4, 1) both; }
+.story-path > * { animation: card-in 360ms both; }
+.story-path > *:nth-child(2) { animation-delay: 80ms; }
+.story-path > *:nth-child(5) { animation-delay: 150ms; }
+.story-path > *:nth-child(8) { animation-delay: 220ms; }
+
+.primary-action,
+.secondary-action,
+.connect-button,
+.new-story,
+.stepper button {
+  transition: transform 140ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease, opacity 180ms ease;
+}
+
+.primary-action:not(:disabled):active,
+.secondary-action:active,
+.connect-button:active,
+.new-story:active {
+  transform: scale(.98);
+}
+
+.story-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform: translateX(-100%);
+  animation: scan 3.8s ease-in-out infinite;
+}
+
+@keyframes workspace-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes comment-float-one {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(-1deg); }
+}
+
+@keyframes comment-float-two {
+  0%, 100% { transform: translateY(0) rotate(1.5deg); }
+  50% { transform: translateY(-9px) rotate(.5deg); }
+}
+
+@keyframes promise-focus {
+  0%, 100% { transform: scale(1); opacity: .92; }
+  50% { transform: scale(1.018); opacity: 1; }
+}
+
+@keyframes playhead-preview {
+  0% { left: 2%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { left: 96%; opacity: 0; }
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(255,181,74,.4); }
+  70% { box-shadow: 0 0 0 7px rgba(255,181,74,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,181,74,0); }
+}
+
+@keyframes success-in {
+  from { opacity: 0; transform: scale(.78); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scan {
+  0%, 25% { transform: translateX(-100%); }
+  65%, 100% { transform: translateX(100%); }
+}
+
+.setup-card.wide { max-width: 860px; }
+.video-loading { display:flex; align-items:center; justify-content:center; gap:8px; margin:-7px 0 18px; color:var(--muted); font-size:11px; }
+.owned-video-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:0 auto 22px; text-align:left; }
+.owned-video-grid button { min-width:0; display:grid; grid-template-columns:112px minmax(0,1fr) 18px; align-items:center; gap:11px; padding:7px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); cursor:pointer; text-align:left; }
+.owned-video-grid button:hover:not(:disabled) { transform:translateY(-2px); border-color:#c5c1ef; box-shadow:0 9px 22px rgba(33,31,75,.09); }
+.owned-video-grid button:disabled { opacity:.55; cursor:wait; }
+.owned-video-grid img,.missing-thumb { width:112px; aspect-ratio:16/9; object-fit:cover; border-radius:7px; background:#e9e8e4; display:grid; place-items:center; color:#8b8c88; }
+.owned-video-grid button>span:nth-child(2) { min-width:0; display:grid; gap:5px; }
+.owned-video-grid strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:10px; }
+.owned-video-grid small { color:var(--muted); font-size:8px; }
+.owned-video-grid button>svg { color:#969793; }
+.paste-divider { display:flex; align-items:center; gap:12px; margin:0 auto 14px; color:#a1a29e; font-size:8px; text-transform:uppercase; letter-spacing:.08em; }
+.paste-divider::before,.paste-divider::after { content:""; height:1px; flex:1; background:var(--line); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .owned-video-grid { grid-template-columns:1fr; }
+}
