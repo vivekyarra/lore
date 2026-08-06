@@ -28,6 +28,8 @@ Lore recovers one explicit unfinished story from a creator-owned video, cites th
 
 ## Quick start: controlled end-to-end demo
 
+On Windows, double-click `Lore.cmd` to build when needed, start the backend, wait for readiness, and open Lore. This prevents an old browser tab from being mistaken for a running application.
+
 Prerequisites: Node 24, npm, FFmpeg, and ffprobe.
 
 ```powershell
@@ -68,6 +70,10 @@ npm run build
 ```
 
 The media test generates creator-owned synthetic source footage, renders the fixed callback, reopens it with ffprobe, and requires a video stream, audio stream, 1920×1080 dimensions, and 8-12 second duration.
+
+## Recorded workflow
+
+The saved [Lore workflow walkthrough](artifacts/Lore_Workflow_Walkthrough.mp4) shows the controlled evidence, callback editor, rendered follow-up, reviewed replies, and closed-story states. Demo replies are simulated and never sent to YouTube.
 
 ## Docker
 

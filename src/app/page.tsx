@@ -21,7 +21,12 @@ const steps: Array<{ id: Step; label: string }> = [
 ];
 
 async function api<T>(url: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(url, options);
+  let response: Response;
+  try {
+    response = await fetch(url, options);
+  } catch {
+    throw new Error("Lore lost its local connection. Start Lore with Lore.cmd, then reload this page.");
+  }
   const body = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(body.error ?? `Request failed (${response.status})`);
   return body as T;

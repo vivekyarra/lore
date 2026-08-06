@@ -9,3 +9,8 @@ storage/uploads
 storage/renders
 *.log
 *.tsbuildinfo
+artifacts/workflow-stages/
+artifacts/video-qa/
+artifacts/*contact-sheet.png
+artifacts/final-preview.png
+artifacts/dedicated-window-check.png
